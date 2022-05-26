@@ -1,0 +1,20 @@
+{
+  "name": "learn-mini-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "@types/jest": "^27.5.1",
+    "babel-jest": "^28.1.0",
+    "jest": "^28.1.0"
+  }
+}
