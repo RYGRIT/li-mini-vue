@@ -1,7 +1,40 @@
-import { effect } from '../effect';
+import { effect, stop } from '../effect';
 import { reactive } from '../reactive'
 
 describe('effect', () => {
+  it('onStop', () => {
+    const obj = reactive({
+      foo: 1,
+    })
+    const onStop = jest.fn()
+    let dummy
+    const runner = effect(() => {
+      dummy = obj.foo
+    },
+    {
+      onStop,
+    })
+    stop(runner)
+    expect(onStop).toBeCalledTimes(1)
+  })
+
+  it('stop', () => {
+    let dummy
+    const obj = reactive({ prop: 1 })
+    const runner = effect(() => {
+      dummy = obj.prop
+    })
+    obj.prop = 2
+    expect(dummy).toBe(2)
+    stop(runner)
+    obj.prop = 3
+    expect(dummy).toBe(2)
+
+    // stopped effect should still be manually callable
+    runner()
+    expect(dummy).toBe(3)
+  })
+
   // 1. 通过 effect 的第二个参数给定的一个 scheduler 的 fn
   // 2. effect 第一次执行的时候不会执行 schedular，而是会执行 fn
   // 3. 当响应式对象 set update 不会执行 fn，而是会执行 schedular
