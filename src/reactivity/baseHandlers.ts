@@ -31,9 +31,9 @@ export const mutableHandlers = {
 
 export const readonlyHandlers = {
   get: readonlyGet,
-
-  set(target, key, newValue) {
+  set(target, key) {
     // 当设置值时，应抛出异常
+    console.warn(`key: ${key} not set, because target is readonly`, target)
     return true
   }
 }

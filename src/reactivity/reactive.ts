@@ -1,4 +1,3 @@
-import { track, trigger } from "./effect"
 import { mutableHandlers, readonlyHandlers } from './baseHandlers'
 
 
