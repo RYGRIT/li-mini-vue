@@ -1,5 +1,9 @@
 import { extend } from "../shared"
 
+// 全局变量
+let activeEffect
+let shouldTrack
+
 class ReactiveEffect {
   private _fn: any
   deps = []
@@ -11,8 +15,18 @@ class ReactiveEffect {
   }
 
   run() {
+    // 1.会收集依赖
+    if (!this.active) {
+      return this._fn()
+    }
+
+    shouldTrack = true
     activeEffect = this
-    return this._fn()
+
+    const result = this._fn()
+    // reset
+    shouldTrack = false
+    return result
   }
 
   stop() {
@@ -48,6 +62,7 @@ export function track(target, key) {
   }
 
   if (!activeEffect) return
+  if (!shouldTrack) return
 
   dep.add(activeEffect)
   activeEffect.deps.push(dep)
@@ -65,7 +80,6 @@ export function trigger(target, key) {
   }
 }
 
-let activeEffect;
 export function effect(fn, options: any = {}) {
   const _effect = new ReactiveEffect(fn, options.scheduler)
   // options
