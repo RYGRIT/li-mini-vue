@@ -28,7 +28,7 @@ describe('effect', () => {
     expect(dummy).toBe(2)
     stop(runner)
     // set
-    // obj.prop = 3
+    // obj.prop = 3 
     // get set
     // obj.prop = obj.prop + 1
     obj.prop++

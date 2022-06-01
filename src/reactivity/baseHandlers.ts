@@ -1,5 +1,6 @@
+import { isObject } from "../shared"
 import { track, trigger } from "./effect"
-import { ReactiveFlags } from "./reactive"
+import { reactive, ReactiveFlags, readonly } from "./reactive"
 
 const get = createGetter()
 const set = createSetter()
@@ -7,11 +8,16 @@ const readonlyGet = createGetter(true)
 
 function createGetter(isReadonly = false) {
   return function (target, key) {
-    const res = Reflect.get(target, key)
     if (key === ReactiveFlags.IS_REACTIVE) {
       return !isReadonly
     } else if (key === ReactiveFlags.IS_READONlY) {
       return isReadonly
+    }
+    const res = Reflect.get(target, key)
+
+    // 看看 res 是不是 object
+    if (isObject(res)) {
+      return isReadonly ? readonly(res) : reactive(res)
     }
     // 依赖收集
     if (!isReadonly) {
