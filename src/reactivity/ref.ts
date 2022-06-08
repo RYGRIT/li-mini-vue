@@ -6,6 +6,7 @@ class RefImpl {
   private _value: any
   public dep
   private _rawValue: any
+  public __v_isRef = true
   constructor(value) {
     this._rawValue = value
     // value -> reactive 包裹之后的结果
@@ -43,4 +44,8 @@ function trackRefValue(ref) {
 
 export function ref(value) {
   return new RefImpl(value)
+}
+
+export function isRef(ref) {
+ return !!ref.__v_isRef 
 }
