@@ -6,10 +6,13 @@ specifiers:
   '@babel/preset-typescript': ^7.17.12
   '@commitlint/cli': ^17.0.1
   '@commitlint/config-conventional': ^17.0.0
+  '@rollup/plugin-typescript': ^8.3.3
   '@types/jest': ^27.5.1
   babel-jest: ^28.1.0
   husky: ^8.0.1
   jest: ^28.1.0
+  rollup: ^2.75.6
+  tslib: ^2.4.0
 
 devDependencies:
   '@babel/core': 7.18.2
@@ -17,10 +20,13 @@ devDependencies:
   '@babel/preset-typescript': 7.17.12_@babel+core@7.18.2
   '@commitlint/cli': 17.0.1
   '@commitlint/config-conventional': 17.0.0
+  '@rollup/plugin-typescript': 8.3.3_rollup@2.75.6+tslib@2.4.0
   '@types/jest': 27.5.1
   babel-jest: 28.1.0_@babel+core@7.18.2
   husky: 8.0.1
   jest: 28.1.0
+  rollup: 2.75.6
+  tslib: 2.4.0
 
 packages:
 
@@ -1661,6 +1667,35 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.13
     dev: true
 
+  /@rollup/plugin-typescript/8.3.3_rollup@2.75.6+tslib@2.4.0:
+    resolution: {integrity: sha512-55L9SyiYu3r/JtqdjhwcwaECXP7JeJ9h1Sg1VWRJKIutla2MdZQodTgcCNybXLMCnqpNLEhS2vGENww98L1npg==}
+    engines: {node: '>=8.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      tslib:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.75.6
+      resolve: 1.22.0
+      rollup: 2.75.6
+      tslib: 2.4.0
+    dev: true
+
+  /@rollup/pluginutils/3.1.0_rollup@2.75.6:
+    resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0
+    dependencies:
+      '@types/estree': 0.0.39
+      estree-walker: 1.0.1
+      picomatch: 2.3.1
+      rollup: 2.75.6
+    dev: true
+
   /@sinclair/typebox/0.23.5:
     resolution: {integrity: sha512-AFBVi/iT4g20DHoujvMH1aEDn8fGJh4xsRGCP6d8RpLPMqsNPvW01Jcn0QysXTsg++/xj25NmJsGyH9xug/wKg==}
     dev: true
@@ -1720,6 +1755,10 @@ packages:
     resolution: {integrity: sha512-kVzjari1s2YVi77D3w1yuvohV2idweYXMCDzqBiVNN63TcDWrIlTVOYpqVrvbbyOE/IyzBoTKF0fdnLPEORFxA==}
     dependencies:
       '@babel/types': 7.18.2
+    dev: true
+
+  /@types/estree/0.0.39:
+    resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
     dev: true
 
   /@types/graceful-fs/4.1.5:
@@ -2334,6 +2373,10 @@ packages:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: true
+
+  /estree-walker/1.0.1:
+    resolution: {integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==}
     dev: true
 
   /esutils/2.0.3:
@@ -3696,6 +3739,14 @@ packages:
       glob: 7.2.3
     dev: true
 
+  /rollup/2.75.6:
+    resolution: {integrity: sha512-OEf0TgpC9vU6WGROJIk1JA3LR5vk/yvqlzxqdrE2CzzXnqKXNzbAwlWUXis8RS3ZPe7LAq+YUxsRa0l3r27MLA==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
     dev: true
@@ -3975,6 +4026,10 @@ packages:
       typescript: 4.7.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+    dev: true
+
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: true
 
   /type-detect/4.0.8:
