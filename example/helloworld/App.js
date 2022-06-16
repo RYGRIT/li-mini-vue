@@ -8,11 +8,11 @@ export const App = {
       id: "root",
       class: ["red", "hard"]
     }, 
-    // "hi, " + this.msg
+    "hi, " + this.msg
     // string
     // "hi, mini-vue"
     // array
-    [h("p", { class: "red" }, "hi"), h("p", { class: "blue" }, "mini-vue")]
+    // [h("p", { class: "red" }, "hi"), h("p", { class: "blue" }, "mini-vue")]
     )
   },
   setup() {
