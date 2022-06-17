@@ -37,7 +37,7 @@ function mountElement(vnode, container) {
   // el.textContent = "hi mini-vue"
   // el.setAttribute("id", "root")
   // document.body.append(el)
-  const el = document.createElement(vnode.type)
+  const el = (vnode.el = document.createElement(vnode.type))
   const { children, props } = vnode
 
   if (typeof children === "string") {
@@ -65,11 +65,14 @@ function mountComponent(vnode, container) {
   setupComponent(instance)
 
 
-  setupRenderEffect(instance, container)
+  setupRenderEffect(instance, vnode, container)
 }
 
-function setupRenderEffect(instance, container) {
+function setupRenderEffect(instance, vnode, container) {
   const { proxy } = instance
   const subTree = instance.render.call(proxy)
   patch(subTree, container)
+
+  // element -> mount
+  vnode.el = subTree.el
 }
