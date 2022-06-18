@@ -31,19 +31,19 @@ function processElement(vnode, container) {
   mountElement(vnode, container)
 }
 
-function mountElement(vnode, container) {
+function mountElement(initialVNode, container) {
   // 方便理解
   // const el = document.createElement("div")
   // el.textContent = "hi mini-vue"
   // el.setAttribute("id", "root")
   // document.body.append(el)
-  const el = (vnode.el = document.createElement(vnode.type))
-  const { children, props } = vnode
+  const el = (initialVNode.el = document.createElement(initialVNode.type))
+  const { children, props } = initialVNode
 
   if (typeof children === "string") {
     el.textContent = children
   } else if (Array.isArray(children)) {
-    mountChildren(vnode, container)
+    mountChildren(initialVNode, container)
   }
   for (const key in props) {
     const val = props[key]
@@ -68,11 +68,11 @@ function mountComponent(vnode, container) {
   setupRenderEffect(instance, vnode, container)
 }
 
-function setupRenderEffect(instance, vnode, container) {
+function setupRenderEffect(instance, initialVNode, container) {
   const { proxy } = instance
   const subTree = instance.render.call(proxy)
   patch(subTree, container)
 
   // element -> mount
-  vnode.el = subTree.el
+  initialVNode.el = subTree.el
 }
