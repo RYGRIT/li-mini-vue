@@ -1,4 +1,5 @@
 import { isObject } from "../shared/index"
+import { ShapeFlags } from "../shared/ShapeFlags"
 import { createComponentInstance, setupComponent } from "./component"
 
 export function render(vnode, container) {
@@ -11,13 +12,18 @@ export function render(vnode, container) {
 function patch(vnode, container) {
   // 去处理组件
 
-  // TODO: 判断vnode是不是一个element
+  // 判断vnode是不是一个element
+  // ShapeFlags 
+  // vnode -> flag
+
   // 是 element 那么就应该处理element
   // 思考题：如何去区分是 element 还是 component 类型
-  console.log(vnode.type) // component -> object element -> div
-  if (typeof vnode.type === "string") {
+  // console.log(vnode.type) // component -> object element -> div
+  const {shapeFlag} = vnode
+  if (shapeFlag & ShapeFlags.ELEMENT) {
     processElement(vnode, container)
-  } else if (isObject(vnode.type)) {
+    // STATEFUL_COMPONENT
+  } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
     processComponent(vnode, container)
   }
 }
@@ -38,11 +44,13 @@ function mountElement(initialVNode, container) {
   // el.setAttribute("id", "root")
   // document.body.append(el)
   const el = (initialVNode.el = document.createElement(initialVNode.type))
-  const { children, props } = initialVNode
+  const { children, props, shapeFlag } = initialVNode
 
-  if (typeof children === "string") {
+  if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
+    // text_children
     el.textContent = children
-  } else if (Array.isArray(children)) {
+  } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
+    // array_children
     mountChildren(initialVNode, container)
   }
   for (const key in props) {
