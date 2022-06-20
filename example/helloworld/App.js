@@ -9,7 +9,13 @@ export const App = {
     // 返回一个虚拟结点
     return h("div", {
       id: "root",
-      class: ["red", "hard"]
+      class: ["red", "hard"],
+      onClick() {
+        console.log("click")
+      },
+      onMousedown() {
+        console.log("mousedown")
+      }
     }, 
     // setupState
     // this.$el -> get root element
