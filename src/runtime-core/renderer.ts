@@ -1,6 +1,7 @@
 import { isObject } from "../shared/index"
 import { ShapeFlags } from "../shared/ShapeFlags"
 import { createComponentInstance, setupComponent } from "./component"
+import { Fragment, Text } from "./vnode"
 
 export function render(vnode, container) {
   // 调用patch方法
@@ -19,15 +20,37 @@ function patch(vnode, container) {
   // 是 element 那么就应该处理element
   // 思考题：如何去区分是 element 还是 component 类型
   // console.log(vnode.type) // component -> object element -> div
-  const {shapeFlag} = vnode
-  if (shapeFlag & ShapeFlags.ELEMENT) {
-    processElement(vnode, container)
-    // STATEFUL_COMPONENT
-  } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
-    processComponent(vnode, container)
+  const { type, shapeFlag } = vnode
+
+  // Fragment -> 只渲染 children
+  switch (type) {
+    case Fragment:
+      processFragment(vnode, container)
+      break
+    case Text:
+      processText(vnode, container)
+      break
+    default:
+      if (shapeFlag & ShapeFlags.ELEMENT) {
+        processElement(vnode, container)
+        // STATEFUL_COMPONENT
+      } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
+        processComponent(vnode, container)
+      }
+      break
   }
 }
 
+function processFragment(vnode, container) {
+  // implement
+  mountChildren(vnode, container)
+}
+
+function processText(vnode, container) {
+  const { children } = vnode
+  const textNode = (vnode.el = document.createTextNode(children))
+  container.append(textNode)
+}
 
 function processComponent(vnode, container) {
   mountComponent(vnode, container)
@@ -51,7 +74,7 @@ function mountElement(initialVNode, container) {
     el.textContent = children
   } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
     // array_children
-    mountChildren(initialVNode, container)
+    mountChildren(initialVNode, el)
   }
   // props
   for (const key in props) {
