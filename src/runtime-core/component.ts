@@ -33,10 +33,11 @@ function setupStatefulComponent(instance) {
 
   const { setup } = Component
   if (setup) {
+    setCurrentInstance(instance)
     const setupResult = setup(shallowReadonly(instance.props), {
       emit: instance.emit
     })
-
+    currentInstance = instance
 
     handleSetupResult(instance, setupResult)
   }
@@ -59,3 +60,11 @@ function shadllowReadonly(props: any): any {
   throw new Error("Function not implemented.")
 }
 
+let currentInstance = null
+export function getCurrentInstance() {
+  return currentInstance
+}
+
+export function setCurrentInstance(instance) {
+  currentInstance = instance
+}
