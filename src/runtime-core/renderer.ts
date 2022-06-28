@@ -6,9 +6,9 @@ import { Fragment, Text } from "./vnode"
 
 export function createRenderer(options) {
   const {
-    createElement,
-    patchProps,
-    insert
+    createElement: hostCreateElement,
+    patchProps: hostPatchProps,
+    insert: hostInsert
   } = options
   function render(vnode, container) {
     // 调用patch方法
@@ -71,7 +71,7 @@ export function createRenderer(options) {
     // el.textContent = "hi mini-vue"
     // el.setAttribute("id", "root")
     // document.body.append(el)
-    const el = (initialVNode.el = createElement(initialVNode.type))
+    const el = (initialVNode.el = hostCreateElement(initialVNode.type))
     const { children, props, shapeFlag } = initialVNode
 
     if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
@@ -95,11 +95,11 @@ export function createRenderer(options) {
       // } else {
       //   el.setAttribute(key, val)
       // }
-      patchProps(el, key, val)
+      hostPatchProps(el, key, val)
     }
     console.log(container)
     // container.append(el)
-    insert(el, container)
+    hostInsert(el, container)
   }
 
   function mountChildren(vnode, container, parentComponent) {
