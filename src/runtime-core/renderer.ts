@@ -243,6 +243,9 @@ export function createRenderer(options) {
         const nextIndex = i + s2
         const nextChild = c2[nextIndex]
         const anchor = nextIndex + 1 < l2 ? c2[nextIndex + 1].el : null
+        if (newIndexToOldIndexMap[i] == 0) {
+          patch(null, nextChild, container, parentComponent, anchor)
+        }
         if (moved) {
           if (j < 0 || i !== increasingNewIndexSequence[j]) {
             console.log("移动位置")
